@@ -1,0 +1,16 @@
+/* Initial style for question box, keeps it hidden */
+#questionContainer{
+    display: none;
+}
+
+li {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color:  #001b44;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5;
+    max-width: 40%;
+  }

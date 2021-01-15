@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Fundamentals Quiz</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1 id="titleText" class="text-center">Javascript Fundamentals Quiz</h1>
+        <div id="StartButton" class="text-center">
+            <!-- Button to start the quiz -->
+            <button id="start-button" class="btn btn-primary btn-lg">
+                <h1><span class="fa fa-question">Start</span></h1>
+            </button>
+        </div>
+    </div>
+    <div id="questionContainer" class="jumbotron text-center">
+        
+    </div>
+    <ul id="quizQuestions">
+
+    </ul>
+    <script type="text/javascript">
+        $("#start-button").on("click", function () {
+            $("#titleText").text("Ready?");
+            $("#StartButton").hide();
+            let readyNum = 3;
+            var countdown = setInterval(function () {
+                console.log(readyNum);
+                if (readyNum <= 0) {
+                    $("#titleText").text("0");
+                    clearInterval(countdown);
+                    startQuiz();
+                }
+                else if (readyNum != 3) {
+                    $("#titleText").text(readyNum);
+                    readyNum--;
+                }
+                else {
+                    $("#titleText").text("3");
+                    readyNum--;
+                }
+                
+            }, 1000);
+            
+        });
+    </script>
+
+
+
+</body>
+
+</html>
