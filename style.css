@@ -3,7 +3,7 @@
     display: none;
 }
 
-li {
+.quizBtn {
     height: 50px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -13,4 +13,5 @@ li {
     font-size: 1.5em;
     line-height: 1.5;
     max-width: 40%;
+    display: none;
   }

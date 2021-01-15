@@ -7,7 +7,6 @@
     <title>Javascript Fundamentals Quiz</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,18 +22,112 @@
         </div>
     </div>
     <div id="questionContainer" class="jumbotron text-center">
-        
-    </div>
-    <ul id="quizQuestions">
 
-    </ul>
+    </div>
+    <div id="quizQuestions">
+        <button id="button1" class="quizBtn btn-primary btn-lg"></button>
+        <button id="button2" class="quizBtn btn-primary btn-lg"></button>
+        <button id="button3" class="quizBtn btn-primary btn-lg"></button>
+    </div>
+    <div id="scoreBox">
+        <h1 id="scoreBox"></h1>
+    </div>
     <script type="text/javascript">
+    $(document).ready(function() {
+        //Initialize lists of questions, answers, and match questions to the right answers
+        const questionArray = ["Which of these is not a javascript data type?", "Which of these is a valid boolean value?", "Which of these is not a loop?", "What type of variable is this: 56,789 ?", "What kind of variable is this: 1234 ?", "Which function returns the length of a string?", "Which of these holds corresponding keys and values?", "What kind of variable is called by this syntax: var example = []?", "What symbol goes at the end of a line of code?"];
+        const answersArray = [["String", "Boolean", "Puzzle"], ["false", "wrong", "correct"], ["for", "while", "during"], ["int", "string", "number"], ["int", "string", "number"], [".length", ".howLong", ".amount"], ["array", "div", "dictionary"], ["array", "div", "dictionary"], [",", ";", "."]];
+        const answersDict = {
+            "Which of these is not a javascript data type?": "Puzzle",
+            "Which of these is a valid boolean value?": "false",
+            "Which of these is not a loop?": "during",
+            "What type of variable is this: 56,789 ?": "string",
+            "What kind of variable is this: 1234 ?": "int",
+            "Which function returns the length of a string?": ".length",
+            "Which of these holds corresponding keys and values?": "dictionary",
+            "What kind of variable is called by this syntax: var example = []?": "array",
+            "What symbol goes at the end of a line of code?": ";"
+        }
+        // Initialize score variable and timer variables
+        let timeLeft = 120;
+        let secondsCounter = 60;
+        let timedis = "";
+        let quizScore = 0;
+        let currentQuestion = 0;
+        // Build out code for ending the quiz
+        function endQuiz() {
+            $("#quizQuestions").empty();
+            $("#questionContainer").text("");
+            $("#questionContainer").hide();
+            $("#titleText").text("Final");
+        }
+        function timeDisplay(secondsLeft){
+            let minDis = "";
+            let secDis = "";
+            let secsNum = 0;
+            let tempClock = "";
+            if(secondsLeft == 120){
+                minDis = "2";
+            }
+            else if(secondsLeft > 60){
+                minDis = "1";
+            }
+            else{
+                minDis = "0";
+            }
+            secsNum = secondsLeft%60;
+            secDis = secsNum.toString();
+            tempClock = minDis + ":" +secDis;
+            return(tempClock);
+        }
+
+        //Build out code for the quiz to run
+        function startQuiz() {
+            $("#questionContainer").show();
+            $("#questionContainer").text(questionArray[0]);
+            $(".quizBtn").show();
+            $("#scoreBox").text(quizScore.toString());
+            $("#button1").text(answersArray[0][0]);
+            $("#button2").text(answersArray[0][1]);
+            $("#button3").text(answersArray[0][2]);
+            let timer = setInterval(function () {
+                if (timeLeft <= 0 ) {
+                    clearInterval(timer);
+                    endQuiz();
+                }
+                timeLeft--;
+                $("#titleText").text(timeDisplay(timeLeft));
+            }, 1000)
+        }
+
+        function checkAnswer() {
+            let useAnswer = this.textContent;
+            let actualAnswer = answersDict[questionArray[currentQuestion]];
+            if (actualAnswer == useAnswer) {
+                quizScore++;
+            }
+            else {
+                if(timeLeft > 10){
+                    timeLeft -= 10;
+                };
+            }
+            currentQuestion++;
+            $("#scoreBox").text("Score: " + quizScore.toString());
+            if(currentQuestion == 9 ){
+                timeLeft = 0;
+                return;
+            }
+            $("#questionContainer").text(questionArray[currentQuestion]);
+            $("#button1").text(answersArray[currentQuestion][0]);
+            $("#button2").text(answersArray[currentQuestion][1]);
+            $("#button3").text(answersArray[currentQuestion][2]);
+        }
         $("#start-button").on("click", function () {
             $("#titleText").text("Ready?");
             $("#StartButton").hide();
             let readyNum = 3;
             var countdown = setInterval(function () {
-                console.log(readyNum);
+                ;
                 if (readyNum <= 0) {
                     $("#titleText").text("0");
                     clearInterval(countdown);
@@ -48,10 +141,13 @@
                     $("#titleText").text("3");
                     readyNum--;
                 }
-                
+
             }, 1000);
-            
+
         });
+        $(".quizBtn").on("click", checkAnswer);
+    });
+
     </script>
 
 
